@@ -2,12 +2,16 @@ from pathlib import Path
 import img2pdf
 import PyPDF2
 
-
 # 原始文件名
 origin_filename = "原始文件"
 
+
 def convert_images_to_pdf(folder: Path):
-    """转换文件夹中的图片到PDF"""
+    """
+    在指定文件夹中将所有图片转换为PDF。
+    Args:
+    - folder (Path): 要检查的文件夹路径。
+    """
     for image_path in folder.glob('*'):
         if image_path.suffix.lower() in ['.png', '.jpg', '.jpeg']:
             pdf_path = image_path.with_suffix('.pdf')
@@ -17,7 +21,12 @@ def convert_images_to_pdf(folder: Path):
 
 
 def move_files_to_original_folder(folder: Path, merged_pdf: Path):
-    """移动文件到“原始文件”文件夹"""
+    """
+    将所有文件（除合并的PDF外）移至“原始文件”文件夹。
+    Args:
+    - folder (Path): 文件和PDF所在的文件夹。
+    - merged_pdf (Path): 合并后的PDF的路径。
+    """
     original_folder = folder / origin_filename
     original_folder.mkdir(exist_ok=True)
 
@@ -33,7 +42,11 @@ def move_files_to_original_folder(folder: Path, merged_pdf: Path):
 
 
 def merge_pdfs_in_folder(folder: Path):
-    """合并文件夹中的所有PDF文件"""
+    """
+    合并文件夹中的所有PDF文件。
+    Args:
+    - folder (Path): 包含PDF的文件夹路径。
+    """
     merged_pdf = folder / f"{folder.name}.pdf"
     if merged_pdf.exists():
         return
@@ -53,6 +66,9 @@ def merge_pdfs_in_folder(folder: Path):
 
 
 def main():
+    """
+    主函数：遍历脚本所在文件夹的每个子文件夹，转换其中的图片，并合并PDF。
+    """
     script_folder = Path(__file__).parent
 
     for folder_path in script_folder.iterdir():
