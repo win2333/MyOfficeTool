@@ -17,15 +17,23 @@ def convert_images_to_pdf(folder: Path):
 
 
 def move_files_to_original_folder(folder: Path, merged_pdf: Path):
-    """移动文件到“原始文件”文件夹"""
+    """
+    将所有文件（除合并的PDF外）移至“原始文件”文件夹。
+    Args:
+    - folder (Path): 文件和PDF所在的文件夹。
+    - merged_pdf (Path): 合并后的PDF的路径。
+    """
     original_folder = folder / origin_filename
     original_folder.mkdir(exist_ok=True)
+
     for file_path in folder.iterdir():
         if file_path.name == merged_pdf.name or file_path.name == "原始文件" or file_path.is_dir():
             continue
+
         target_path = original_folder / file_path.name
         if target_path.exists():
             target_path.unlink()
+
         file_path.rename(target_path)
 
 
