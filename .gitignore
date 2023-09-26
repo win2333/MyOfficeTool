@@ -1,4 +1,5 @@
 MyOfficetool-venv/
+MyOffice-venv/
 __pycache__/
 *.pyc
 *.pyo
